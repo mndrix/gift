@@ -1,0 +1,66 @@
+#!/usr/local/bin/swipl -q -t main -s
+
+main([]) :-
+    show_help.
+main([help|_]) :-
+    show_help.
+
+% generate pack documentation
+main([doc|_]) :-
+    pack_title(Title),
+    format('Generating documentation ...~n'),
+    doc_save( prolog,
+        [ doc_root(doc)
+        , format(html)
+        , title(Title)
+        , if(true)
+        , recursive(true)
+        ]
+    ).
+
+% build an archive file with relevant pack components
+main([archive|_]) :-
+    pack_archive(Archive),
+    format('Building archive ...~n'),
+    format(atom(Cmd), 'tar czf ~p pack.pl prolog/*.pl', [Archive]),
+    shell(Cmd).
+
+% publish all pack files to Google Cloud Storage
+main([push|_]) :-
+    main([doc]),       % update documentation
+    main([archive]),   % build pack archive
+    format('Copying files to a public location ...~n'),
+    pack_name(Name),
+    pack_archive(Archive),
+    BaseCmd = 'gsutil cp -a public-read -z html,css doc/*',
+    format(atom(Cp), '~p ~p gs://packs.ndrix.com/~p', [BaseCmd, Archive, Name]),
+    shell(Cp),
+    true.
+
+show_help :-
+    format('gift manages and publishes SWI-Prolog packs.~n'),
+    format('Subcommands include the following~n'),
+    nl,
+    format('  doc     - generate documentation~n'),
+    format('  archive - build the pack''s tar ball~n'),
+    format('  push    - publish docs and archive publicly~n'),
+    nl,
+    format('gift help    - show this help screen~n'),
+    true.  % make patches cleaner
+
+% the filename in which this pack is archived
+pack_archive(FileName) :-
+    pack_name(Name),
+    pack_version(Version),
+    format(atom(FileName), '~p-~p.tgz', [Name, Version]).
+
+pack_attribute(Pattern) :-
+    read_file_to_terms('pack.pl', Terms, []),
+    member(Pattern, Terms).
+
+pack_title(Title) :-
+    pack_attribute(title(Title)).
+pack_name(Name) :-
+    pack_attribute(name(Name)).
+pack_version(Version) :-
+    pack_attribute(version(Version)).
