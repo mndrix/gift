@@ -1,9 +1,43 @@
 #!/usr/local/bin/swipl -q -t main -s
+:- use_module(library(doc_files), [doc_save/2]).
+:- use_module(library(filesex), [make_directory_path/1]).
+:- use_module(library(lists), [member/2]).
+:- use_module(library(readutil), [read_file_to_terms/3]).
+
 
 main([]) :-
     show_help.
 main([help|_]) :-
     show_help.
+
+% initialize a brand new, empty pack project
+main([init, Name|_]) :-
+    atom_concat(Name, '/prolog', Prolog),
+    make_directory_path(Prolog),
+    atom_concat(Name, '/pack.pl', Pack),
+    open(Pack, write, Stream, [encoding(utf8)]),
+
+    Version = '0.0.1',
+    Author = 'Michael Hendricks',
+    Email = 'michael@ndrix.org',
+    Host = 'http://packs.ndrix.com/',
+    atomic_list_concat([Host,Name,'/index.html'], Home),
+    atomic_list_concat([Host,Name,'/',Name,'-',Version,'.tgz'],Download),
+
+    tell(Stream),
+    write_terms(
+        [ name(Name)
+        , version(Version)
+        , title('')
+        , keywords([])
+        , author(Author, Email)
+        , packager(Author, Email)
+        , maintainer(Author, Email)
+        , home(Home)
+        , download(Download)
+        ]
+    ),
+    told.
 
 % generate pack documentation
 main([doc|_]) :-
@@ -41,6 +75,7 @@ show_help :-
     format('gift manages and publishes SWI-Prolog packs.~n'),
     format('Subcommands include the following~n'),
     nl,
+    format('  init    - create a new pack directory structure~n'),
     format('  doc     - generate documentation~n'),
     format('  archive - build the pack''s tar ball~n'),
     format('  push    - publish docs and archive publicly~n'),
@@ -64,3 +99,8 @@ pack_name(Name) :-
     pack_attribute(name(Name)).
 pack_version(Version) :-
     pack_attribute(version(Version)).
+
+write_terms([]).
+write_terms([Term|Terms]) :-
+    format('~q.~n', Term),
+    write_terms(Terms).
