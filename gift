@@ -29,7 +29,6 @@ main([init, Name|_]) :-
         [ name(Name)
         , version(Version)
         , title('')
-        , keywords([])
         , author(Author, Email)
         , packager(Author, Email)
         , maintainer(Author, Email)
