@@ -40,6 +40,8 @@ main([init, Name|_]) :-
 
 % generate pack documentation
 main([doc|_]) :-
+    inside_a_pack_directory,
+
     pack_title(Title),
     format('Generating documentation ...~n'),
     doc_save( prolog,
@@ -53,6 +55,7 @@ main([doc|_]) :-
 
 % build an archive file with relevant pack components
 main([archive|_]) :-
+    inside_a_pack_directory,
     pack_archive(Archive),
     format('Building archive ...~n'),
     format(atom(Cmd), 'tar czf ~p README pack.pl prolog/*.pl', [Archive]),
@@ -60,6 +63,7 @@ main([archive|_]) :-
 
 % publish all pack files to Google Cloud Storage
 main([push|_]) :-
+    inside_a_pack_directory,
     main([doc]),       % update documentation
     main([archive]),   % build pack archive
     format('Copying files to a public location ...~n'),
@@ -81,6 +85,15 @@ show_help :-
     nl,
     format('gift help    - show this help screen~n'),
     true.  % make patches cleaner
+
+% demand that the current working directory contains a SWI-Prolog pack
+inside_a_pack_directory :-
+    ( exists_file('pack.pl') ->
+        true
+    ; % otherwise ->
+        print_message(error, format('Run gift from a pack directory',[])),
+        halt(1)
+    ).
 
 % the filename in which this pack is archived
 pack_archive(FileName) :-
