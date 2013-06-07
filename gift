@@ -75,6 +75,23 @@ main([push|_]) :-
     shell(Cp),
     true.
 
+% run all tests matching t/*.pl
+main([test|ProveArgs]) :-
+    % build SWI initialization file to configure library path
+    tell('init.pl'),
+    writeln(':- user:asserta(file_search_path(library,prolog)).'),
+    told,
+
+    % run prove to execute all tests
+    atomic_list_concat(ProveArgs, ' ', Args),
+    SWI = 'swipl -q -f init.pl -t main -s',
+    format(atom(Prove), "prove --ext=pl -r -e '~w' ~w t", [SWI,Args]),
+    shell(Prove),
+
+    % remove initialization file now that we're done with it
+    rm('init.pl'),
+    true.
+
 show_help :-
     format('gift manages and publishes SWI-Prolog packs.~n'),
     format('Subcommands include the following~n'),
