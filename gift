@@ -55,7 +55,7 @@ main([doc|_]) :-
 main([archive|_]) :-
     pack_archive(Archive),
     format('Building archive ...~n'),
-    format(atom(Cmd), 'tar czf ~p pack.pl prolog/*.pl', [Archive]),
+    format(atom(Cmd), 'tar czf ~p README pack.pl prolog/*.pl', [Archive]),
     shell(Cmd).
 
 % publish all pack files to Google Cloud Storage
