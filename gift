@@ -1,4 +1,4 @@
-#!/usr/local/bin/swipl -q -t main -f
+#!/usr/bin/env pl
 :- use_module(library(lists), [member/2]).
 :- use_module(library(readutil), [read_file_to_terms/3]).
 
