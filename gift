@@ -41,10 +41,10 @@ main([init, Name|_]) :-
 % generate pack documentation
 main([doc|_]) :-
     inside_a_pack_directory,
+    format('Generating documentation ...~n'),
     use_module(library(doc_files), [doc_save/2]),
 
     pack_title(Title),
-    format('Generating documentation ...~n'),
     doc_save( prolog,
         [ doc_root(doc)
         , format(html)
