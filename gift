@@ -125,6 +125,7 @@ show_help :-
     nl,
     format('  init    - create a new pack directory structure~n'),
     format('  doc     - generate documentation~n'),
+    format('  test    - run TAP tests~n'),
     format('  archive - build the pack''s tar ball~n'),
     format('  push    - publish docs and archive publicly~n'),
     nl,
