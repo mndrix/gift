@@ -1,4 +1,5 @@
 #!/usr/bin/env pl
+% vim: filetype=prolog
 :- use_module(library(lists), [member/2]).
 :- use_module(library(readutil), [read_file_to_terms/3]).
 :- use_module(library(func)).
