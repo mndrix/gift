@@ -114,7 +114,7 @@ main([test|ProveArgs]) :-
     % run prove to execute all tests
     atomic_list_concat(ProveArgs, ' ', Args),
     SWI = 'swipl -q -f init.pl -t main -s',
-    format(atom(Prove), "prove --ext=pl -r -e '~w' ~w t", [SWI,Args]),
+    format(atom(Prove), "prove --ext=pl -j2 -r -e '~w' ~w t", [SWI,Args]),
     shell(Prove),
 
     % remove initialization file now that we're done with it
