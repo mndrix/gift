@@ -111,10 +111,18 @@ main([test|ProveArgs]) :-
     writeln(':- user:asserta(file_search_path(library,prolog)).'),
     told,
 
+    % which arguments should we pass to prove?
+    ( ProveArgs = [] ->
+        atomic_list_concat(['-j2', t], ' ', Args)
+    ; maplist(commandline_option, ProveArgs) ->
+        atomic_list_concat([t|ProveArgs], ' ', Args)
+    ; % otherwise ->
+        atomic_list_concat(['-j2'|ProveArgs], ' ', Args)
+    ),
+
     % run prove to execute all tests
-    atomic_list_concat(ProveArgs, ' ', Args),
     SWI = 'swipl -q -f init.pl -t main -s',
-    format(atom(Prove), "prove --ext=pl -j2 -r -e '~w' ~w t", [SWI,Args]),
+    format(atom(Prove), "prove --ext=pl -r -e '~w' ~w", [SWI,Args]),
     shell(Prove),
 
     % remove initialization file now that we're done with it
@@ -188,3 +196,7 @@ write_terms([]).
 write_terms([Term|Terms]) :-
     format('~q.~n', Term),
     write_terms(Terms).
+
+
+commandline_option(Atom) :-
+    sub_atom(Atom, 0, 1, _, '-').
