@@ -46,6 +46,12 @@ main([init, Name|_]) :-
     ),
     told,
 
+    % create .gitignore file
+    tell('.gitignore'),
+    writeln('*~'),
+    writeln('*.swp'),
+    told,
+
     % create empty module file
     tell('prolog/~w.pl' $ Name),
     format(':- module(~w, []).~n', [Name]),
