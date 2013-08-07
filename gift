@@ -49,6 +49,7 @@ main([init, Name|_]) :-
     tell('.gitignore'),
     writeln('*~'),
     writeln('*.swp'),
+    writeln('doc/'),
     told,
 
     % create empty module file
