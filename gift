@@ -24,8 +24,7 @@ main([init, Name|_]) :-
     Email = 'michael@ndrix.org',
     License = 'BSD',
     readme_template(Name, Author, Email, License),
-    link_file('README', 'README.md', symbolic),
-    link_file('../README', 'prolog/readme.txt', symbolic),
+    link_file('../README.md', 'prolog/README.md', symbolic),
 
     % create pack metadata file
     tell('pack.pl'),
@@ -94,7 +93,7 @@ main([archive|_]) :-
     inside_a_pack_directory,
     pack_archive(Archive),
     format('Building archive ...~n'),
-    format(atom(Cmd), 'tar czf ~p README pack.pl prolog/*.pl', [Archive]),
+    format(atom(Cmd), 'tar czf ~p README.md pack.pl prolog/*.pl', [Archive]),
     shell(Cmd).
 
 % publish all pack files to Google Cloud Storage
@@ -157,7 +156,7 @@ inside_a_pack_directory :-
 
 % create a default README file
 readme_template(Name, Author, Email, License) :-
-    tell('README'),
+    tell('README.md'),
     format('# Synopsis~n'),
     nl,
     format('    :- use_module(library(~w)).~n', [Name]),
