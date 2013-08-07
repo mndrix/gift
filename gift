@@ -129,10 +129,9 @@ main([test|ProveArgs]) :-
     % run prove to execute all tests
     SWI = 'swipl -q -f init.pl -t main -s',
     format(atom(Prove), "prove --ext=pl -r -e '~w' ~w", [SWI,Args]),
-    shell(Prove),
-
-    % remove initialization file now that we're done with it
-    rm('init.pl').
+    call_cleanup( shell(Prove)
+                , rm('init.pl')
+                ).
 
 show_help :-
     format('gift manages and publishes SWI-Prolog packs.~n'),
