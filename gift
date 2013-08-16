@@ -177,6 +177,8 @@ readme_template(Name, Author, Email, License) :-
     nl,
     format('    ?- pack_install(~w).~n', [Name]),
     nl,
+    format('This module uses [semantic versioning](http://semver.org/).'),
+    nl,
     format('Source code available and pull requests accepted at~n'),
     format('http://github.com/mndrix/~w~n', [Name]),
     nl,
