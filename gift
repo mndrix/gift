@@ -105,7 +105,7 @@ main([push|_]) :-
     format('Copying files to a public location ...~n'),
     pack_name(Name),
     pack_archive(Archive),
-    BaseCmd = 'gsutil cp -a public-read -z html,css doc/*',
+    BaseCmd = 'gsutil -m cp -a public-read -z html,css doc/*',
     format(atom(Cp), '~p ~p gs://packs.ndrix.com/~p', [BaseCmd, Archive, Name]),
     shell(Cp),
     true.
