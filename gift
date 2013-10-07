@@ -103,6 +103,7 @@ main([archive|_]) :-
 % publish all pack files to Google Cloud Storage
 main([push|_]) :-
     inside_a_pack_directory,
+    main([test]),      % run tests (TODO fail if the tests fail)
     main([doc]),       % update documentation
     main([archive]),   % build pack archive
     format('Copying files to a public location ...~n'),
