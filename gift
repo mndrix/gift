@@ -29,6 +29,15 @@ main([init, Name|_]) :-
     readme_template(Name, Author, Email, License),
     link_file('../README.md', 'prolog/README.md', symbolic),
 
+    % create dev.pl
+    tell('dev.pl'),
+    write_terms(
+        [ (:- user:asserta(file_search_path(library,prolog)))
+        , (:- guitracer)
+        ]
+    ),
+    told,
+
     % create pack metadata file
     tell('pack.pl'),
     Version = '0.0.1',
