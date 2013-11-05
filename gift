@@ -34,6 +34,7 @@ main([init, Name|_]) :-
     write_terms(
         [ (:- user:asserta(file_search_path(library,prolog)))
         , (:- guitracer)
+        , (:- debug(Name))
         ]
     ),
     told,
