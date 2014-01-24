@@ -1,5 +1,4 @@
 #!/usr/local/bin/swipl -f none
-% vim: filetype=prolog
 :- set_prolog_flag(verbose, silent).
 :- initialization main.
 
