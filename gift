@@ -48,16 +48,6 @@ main([init, Name|_]) :-
     readme_template(Name, Author, Email, License),
     link_file('../README.md', 'prolog/README.md', symbolic),
 
-    % create dev.pl
-    tell('dev.pl'),
-    write_terms(
-        [ (:- user:asserta(file_search_path(library,prolog)))
-        , (:- guitracer)
-        , (:- debug(Name))
-        ]
-    ),
-    told,
-
     % create pack metadata file
     tell('pack.pl'),
     Version = '0.0.1',
@@ -81,6 +71,7 @@ main([init, Name|_]) :-
     tell('.gitignore'),
     writeln('*~'),
     writeln('*.swp'),
+    writeln('dev.pl'),
     writeln('doc/'),
     told,
 
@@ -167,6 +158,15 @@ main([test|ProveArgs]) :-
                 ).
 
 
+main([top]) :-
+    use_module(library(unix)),
+    gift_config:top_initialization(Init),
+    tell('dev.pl'),
+    write_terms([:- Init]),
+    told,
+    exec(swipl('-f', 'dev.pl')).
+
+
 % debugging command which dumps the user's configuration
 main([show_config]) :-
     gift_config:listing.
@@ -176,6 +176,7 @@ show_help :-
     format('Subcommands include the following~n'),
     nl,
     format('  init    - create a new pack directory structure~n'),
+    format('  top     - load pack code in a toplevel~n'),
     format('  doc     - generate documentation~n'),
     format('  test    - run TAP tests~n'),
     format('  archive - build the pack''s tar ball~n'),
