@@ -1,6 +1,5 @@
 #!/usr/bin/env pl
 :- set_prolog_flag(verbose, silent).
-:-user:asserta(file_search_path(library,prolog)),debug(gift).  % TODO remove
 :- initialization main.
 
 :- use_module(library(gift), [main/1]).
