@@ -1,29 +1,6 @@
 #!/usr/bin/env pl
 :- set_prolog_flag(verbose, silent).
 :-user:asserta(file_search_path(library,prolog)),debug(gift).  % TODO remove
-:- initialization load_config_module.
 :- initialization main.
 
-:- use_module(library(gift), []).
-
-
-% absolute path to the user's config file
-config_path(Path) :-
-    expand_file_name('~/.giftrc', [Path]).
-
-% load user's config file into gift_config module
-load_config_module :-
-    config_path(ConfigPath),
-    exists_file(ConfigPath),
-    !,
-    gift_config:load_files( ConfigPath
-                          , [ expand(true)
-                            , if(changed)
-                            ]
-                          ).
-load_config_module :-
-    % config file doesn't exist
-    true.
-
-main(Args) :-
-    gift:main(Args).
+:- use_module(library(gift), [main/1]).

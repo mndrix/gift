@@ -1,4 +1,5 @@
-:- module(gift, []).
+:- module(gift, [main/1]).
+:- use_module(library(gift/config), []).
 :- use_module(library(func)).
 
 
