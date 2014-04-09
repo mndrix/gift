@@ -20,5 +20,5 @@ go(_Args) :-
     pack_name(Name),
     pack_archive(Archive),
     BaseCmd = 'gsutil -m cp -a public-read -z html,css doc/*',
-    Cp = '~p ~p gs://packs.ndrix.com/~p' $ [BaseCmd, Archive, Name],
+    Cp = '~s ~s gs://packs.ndrix.com/~s' $ [BaseCmd, Archive, Name],
     shell(Cp).
