@@ -17,9 +17,12 @@ go([Name|_]) :-
     % create rudimentary README
     Author = 'Michael Hendricks',
     Email = 'michael@ndrix.org',
-    License = 'BSD',
+    License = 'MIT',
     readme_template(Name, Author, Email, License),
     link_file('../README.md', 'prolog/README.md', symbolic),
+
+    % create LICENSE
+    license_template(License, Author),
 
     % create pack metadata file
     tell('pack.pl'),
@@ -99,4 +102,36 @@ readme_template(Name, Author, Email, License) :-
     nl,
     format('@author ~w <~w>~n', [Author,Email]),
     format('@license ~w~n', [License]),
+    told.
+
+% create a default LICENSE file
+license_template('MIT', Author) :-
+    get_time(Now),
+    format(string(CopyrightTemplate),"Copyright (c) %Y ~s~n",[Author]),
+
+    tell('LICENSE'),
+    writeln("The MIT License (MIT)"),
+    nl,
+    format_time(current_output, CopyrightTemplate, Now),
+    nl,
+    writeln("Permission is hereby granted, free of charge, to any person"),
+    writeln("obtaining a copy of this software and associated documentation"),
+    writeln("files (the \"Software\"), to deal in the Software without"),
+    writeln("restriction, including without limitation the rights to use,"),
+    writeln("copy, modify, merge, publish, distribute, sublicense, and/or"),
+    writeln("sell copies of the Software, and to permit persons to whom"),
+    writeln("the Software is furnished to do so, subject to the following"),
+    writeln("conditions:"),
+    nl,
+    writeln("The above copyright notice and this permission notice shall be"),
+    writeln("included in all copies or substantial portions of the Software."),
+    nl,
+    writeln("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,"),
+    writeln("EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES"),
+    writeln("OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND"),
+    writeln("NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS"),
+    writeln("BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN"),
+    writeln("ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN"),
+    writeln("CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE"),
+    writeln("SOFTWARE."),
     told.
