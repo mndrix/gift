@@ -12,7 +12,10 @@ summary("publish pack publicly").
 % publish all pack files to Google Cloud Storage
 go(_Args) :-
     inside_a_pack_directory,
-    gift:main(test, []),      % run tests (TODO fail if the tests fail)
+
+    % run tests (TODO fail if the tests fail)
+    ( getenv('GIFT_SKIP_TESTS',_) -> true; gift:main(test, []) ),
+
     gift:main(doc, []),       % update documentation
     gift:main(archive, []),   % build pack archive
 
