@@ -34,9 +34,9 @@ go([Name|_]) :-
     % create pack metadata file
     tell('pack.pl'),
     Version = '0.0.1',
-    Host = 'http://packs.ndrix.com',
-    Home = '~w/~w/index.html' $ [Host,Name],
-    Download = '~w/~w/~w-~w.tgz' $ [Host,Name,Name,Version],
+    Host = 'http://github.com/mndrix',
+    Home = '~w/~w' $ [Host,Name],
+    Download = '~w/~w/archive/v~w.zip' $ [Host,Name,Name,Version],
     write_terms(
         [ name(Name)
         , title('')
