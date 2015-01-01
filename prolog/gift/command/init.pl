@@ -94,7 +94,7 @@ readme_template(Name, Author, Email, License) :-
     nl,
     format('# Installation~n'),
     nl,
-    format('Using SWI-Prolog 6.3 or later:~n'),
+    format('Using SWI-Prolog 7.1 or later:~n'),
     nl,
     format('    ?- pack_install(~w).~n', [Name]),
     nl,
