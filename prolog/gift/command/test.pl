@@ -11,7 +11,9 @@ go(ProveArgs) :-
 
     % which arguments should we pass to prove?
     ( ProveArgs = [] ->
-        atomic_list_concat(['-j2', t], ' ', Args)
+        current_prolog_flag(cpu_count, CpuCount),
+        format(atom(DashJ),'-j~d',[CpuCount]),
+        atomic_list_concat([DashJ, t], ' ', Args)
     ; maplist(commandline_option, ProveArgs) ->
         atomic_list_concat([t|ProveArgs], ' ', Args)
     ; % otherwise ->
