@@ -36,7 +36,7 @@ go([Name|_]) :-
     Version = '0.0.1',
     Host = 'http://github.com/mndrix',
     Home = '~w/~w' $ [Host,Name],
-    Download = '~w/~w/archive/v~w.zip' $ [Host,Name,Name,Version],
+    Download = '~w/~w/archive/v~w.zip' $ [Host,Name,Version],
     write_terms(
         [ name(Name)
         , title('')
