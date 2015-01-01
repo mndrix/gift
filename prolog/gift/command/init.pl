@@ -23,6 +23,14 @@ go([Name|_]) :-
     % create LICENSE
     license_template(License, Author),
 
+    % create History.md
+    tell('History.md'),
+    writeln("# v0.0.1 (YYYY-MM-DD)"),
+    writeln(""),
+    writeln("  * Describe first change"),
+    writeln("  * Describe another change"),
+    told,
+
     % create pack metadata file
     tell('pack.pl'),
     Version = '0.0.1',
