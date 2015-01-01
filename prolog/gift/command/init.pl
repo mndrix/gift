@@ -19,7 +19,6 @@ go([Name|_]) :-
     Email = 'michael@ndrix.org',
     License = unlicense,
     readme_template(Name, Author, Email, License),
-    link_file('../README.md', 'prolog/README.md', symbolic),
 
     % create LICENSE
     license_template(License, Author),
