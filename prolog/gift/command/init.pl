@@ -102,9 +102,6 @@ readme_template(Name, Author, Email, License) :-
     nl,
     format('Source code available and pull requests accepted at~n'),
     format('http://github.com/mndrix/~w~n', [Name]),
-    nl,
-    format('@author ~w <~w>~n', [Author,Email]),
-    format('@license ~w~n', [License]),
     told.
 
 % create a default LICENSE file
