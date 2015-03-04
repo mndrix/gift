@@ -15,7 +15,7 @@ go(_Args) :-
     inside_a_pack_directory,
     pack_archive(Archive),
     format('Building archive ...~n'),
-    Cmd = 'tar czf ~p README.md History.md pack.pl `find prolog t -name "*.pl"`' $ [Archive],
+    Cmd = 'git archive --format tgz -9 -o ~p HEAD' $ [Archive],
     setup_call_cleanup( shell('git stash')
                       , shell(Cmd)
                       , shell('git stash pop')
