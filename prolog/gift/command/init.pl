@@ -25,7 +25,7 @@ go([Name|_]) :-
 
     % create History.md
     tell('History.md'),
-    writeln("# v0.0.1 (YYYY-MM-DD)"),
+    writeln("# v0.1.0 (YYYY-MM-DD)"),
     writeln(""),
     writeln("  * Describe first change"),
     writeln("  * Describe another change"),
