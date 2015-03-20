@@ -81,7 +81,7 @@ go([Name|_]) :-
 
 
 % create a default README file
-readme_template(Name, Author, Email, License) :-
+readme_template(Name, _Author, _Email, _License) :-
     tell('README.md'),
     format('# Synopsis~n'),
     nl,
